@@ -7,5 +7,5 @@ import com.turkcell.rentacar.entities.concretes.Color;
 
 @Repository
 public interface ColorDao extends JpaRepository<Color, Integer> {
-
+	Color findByColorName(String name);
 }

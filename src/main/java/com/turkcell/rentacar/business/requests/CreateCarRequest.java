@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCarRequest {
-	private String carName;
 	private double dailyPrice;
 	private String modelYear;
 	private String description;

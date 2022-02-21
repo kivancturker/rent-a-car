@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.turkcell.rentacar.business.dtos.GetByIdBrandDto;
 import com.turkcell.rentacar.business.dtos.ListBrandDto;
 import com.turkcell.rentacar.business.requests.CreateBrandRequest;
+import com.turkcell.rentacar.business.requests.UpdateBrandRequest;
 
 
 @Service
@@ -14,4 +15,5 @@ public interface BrandService {
 	List<ListBrandDto> getAll();
 	void add(CreateBrandRequest createBrandRequest);
 	GetByIdBrandDto getById(int id);
+	void update(UpdateBrandRequest updateBrandRequest, String brandName);
 } 

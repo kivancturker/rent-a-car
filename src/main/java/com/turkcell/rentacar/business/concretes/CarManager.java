@@ -10,8 +10,10 @@ import com.turkcell.rentacar.business.abstracts.CarService;
 import com.turkcell.rentacar.business.dtos.GetByIdCarDto;
 import com.turkcell.rentacar.business.dtos.ListCarDto;
 import com.turkcell.rentacar.business.requests.CreateCarRequest;
+import com.turkcell.rentacar.business.requests.UpdateCarRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.dataaccess.abstracts.CarDao;
+import com.turkcell.rentacar.entities.concretes.Brand;
 import com.turkcell.rentacar.entities.concretes.Car;
 
 @Service
@@ -47,6 +49,16 @@ public class CarManager implements CarService {
 		var result = this.carDao.getById(id);
 		GetByIdCarDto response = this.modelMapperService.forDto().map(result, GetByIdCarDto.class);
 		return response;
+	}
+
+	@Override
+	public void update(UpdateCarRequest updateCarRequest, String carName) {
+		Car car = this.modelMapperService.forRequest().map(updateCarRequest, Car.class);
+		Car carToUpdate = this.carDao.findByCarName(carName);
+		
+		
+		this.carDao.save(carToUpdate);
+		
 	}
 
 }

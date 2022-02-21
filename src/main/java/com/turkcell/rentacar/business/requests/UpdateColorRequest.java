@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateColorRequest {
-	private String colorName;
+public class UpdateColorRequest {
+	CreateColorRequest updateColor;
 }

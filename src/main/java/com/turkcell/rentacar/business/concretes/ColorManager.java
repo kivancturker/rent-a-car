@@ -10,6 +10,7 @@ import com.turkcell.rentacar.business.abstracts.ColorService;
 import com.turkcell.rentacar.business.dtos.GetByIdColorDto;
 import com.turkcell.rentacar.business.dtos.ListColorDto;
 import com.turkcell.rentacar.business.requests.CreateColorRequest;
+import com.turkcell.rentacar.business.requests.UpdateColorRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.dataaccess.abstracts.ColorDao;
 import com.turkcell.rentacar.entities.concretes.Color;
@@ -47,6 +48,15 @@ public class ColorManager implements ColorService {
 		var result = this.colorDao.getById(id);
 		GetByIdColorDto response = this.modelMapperService.forDto().map(result, GetByIdColorDto.class);
 		return response;
+	}
+
+	@Override
+	public void update(UpdateColorRequest updateColorRequest, String colorName) {
+		Color color = this.modelMapperService.forRequest().map(updateColorRequest, Color.class);
+		Color colorToUpdate = this.colorDao.findByColorName(colorName);
+		colorToUpdate.setColorName(color.getColorName());
+		
+		this.colorDao.save(colorToUpdate);
 	}
 
 }

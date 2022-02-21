@@ -10,6 +10,7 @@ import com.turkcell.rentacar.business.abstracts.BrandService;
 import com.turkcell.rentacar.business.dtos.GetByIdBrandDto;
 import com.turkcell.rentacar.business.dtos.ListBrandDto;
 import com.turkcell.rentacar.business.requests.CreateBrandRequest;
+import com.turkcell.rentacar.business.requests.UpdateBrandRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.dataaccess.abstracts.BrandDao;
 import com.turkcell.rentacar.entities.concretes.Brand;
@@ -51,6 +52,15 @@ public class BrandManager implements BrandService {
 		GetByIdBrandDto response = this.modelMapperService.forDto().map(result, GetByIdBrandDto.class);
 		
 		return response;
+	}
+
+	@Override
+	public void update(UpdateBrandRequest updateBrandRequest, String brandName) {
+		Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
+		Brand brandToUpdate = this.brandDao.findByBrandName(brandName);
+		brandToUpdate.setBrandName(brand.getBrandName());
+		
+		this.brandDao.save(brandToUpdate);
 	}
 	
 }
