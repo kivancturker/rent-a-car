@@ -12,6 +12,10 @@ import com.turkcell.rentacar.business.dtos.ListColorDto;
 import com.turkcell.rentacar.business.requests.CreateColorRequest;
 import com.turkcell.rentacar.business.requests.UpdateColorRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
+import com.turkcell.rentacar.core.utils.results.DataResult;
+import com.turkcell.rentacar.core.utils.results.Result;
+import com.turkcell.rentacar.core.utils.results.SuccessDataResult;
+import com.turkcell.rentacar.core.utils.results.SuccessResult;
 import com.turkcell.rentacar.dataaccess.abstracts.ColorDao;
 import com.turkcell.rentacar.entities.concretes.Color;
 
@@ -28,35 +32,42 @@ public class ColorManager implements ColorService {
 	}
 
 	@Override
-	public List<ListColorDto> getAll() {
+	public DataResult<List<ListColorDto>> getAll() {
 		var result = this.colorDao.findAll();
 		List<ListColorDto> response = result.stream()
 				.map(color -> this.modelMapperService.forDto().map(color, ListColorDto.class))
 				.collect(Collectors.toList());
-		return response;
+		return new SuccessDataResult<List<ListColorDto>>(response);
 	}
 
 	@Override
-	public void add(CreateColorRequest createColorRequest) {
+	public Result add(CreateColorRequest createColorRequest) {
 		Color color = this.modelMapperService.forRequest().map(createColorRequest, Color.class);
 		this.colorDao.save(color);
-		
+		return new SuccessResult("Color Added.");
 	}
 
 	@Override
-	public GetByIdColorDto getById(int id) {
+	public DataResult<GetByIdColorDto> getById(int id) {
 		var result = this.colorDao.getById(id);
 		GetByIdColorDto response = this.modelMapperService.forDto().map(result, GetByIdColorDto.class);
-		return response;
+		return new SuccessDataResult<GetByIdColorDto>(response);
 	}
 
 	@Override
-	public void update(UpdateColorRequest updateColorRequest, String colorName) {
+	public Result update(int id, UpdateColorRequest updateColorRequest) {
 		Color color = this.modelMapperService.forRequest().map(updateColorRequest, Color.class);
-		Color colorToUpdate = this.colorDao.findByColorName(colorName);
+		Color colorToUpdate = this.colorDao.getById(id);
 		colorToUpdate.setColorName(color.getColorName());
 		
 		this.colorDao.save(colorToUpdate);
+		return new SuccessResult("Color Updated.");
+	}
+
+	@Override
+	public Result delete(int id) {
+		this.colorDao.deleteById(id);
+		return new SuccessResult("Color Deleted.");
 	}
 
 }

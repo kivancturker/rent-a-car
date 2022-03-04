@@ -2,6 +2,7 @@ package com.turkcell.rentacar.api.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import com.turkcell.rentacar.business.dtos.GetByIdColorDto;
 import com.turkcell.rentacar.business.dtos.ListColorDto;
 import com.turkcell.rentacar.business.requests.CreateColorRequest;
 import com.turkcell.rentacar.business.requests.UpdateColorRequest;
+import com.turkcell.rentacar.core.utils.results.DataResult;
+import com.turkcell.rentacar.core.utils.results.Result;
 
 @RestController
 @RequestMapping("/api/colors")
@@ -26,24 +29,29 @@ public class ColorController {
 		this.colorService = colorService;
 	}
 	
-	@GetMapping("/getall")
-	public List<ListColorDto> getAll() {
+	@GetMapping
+	public DataResult<List<ListColorDto>> getAll() {
 		return this.colorService.getAll();
 	}
 	
-	@PostMapping("/add")
-	public void add(@RequestBody CreateColorRequest createColorRequest) {
-		this.colorService.add(createColorRequest);
-	}
-	
-	@GetMapping(path = {"/getById", "/getById/{id}"})
-	public GetByIdColorDto getById(@PathVariable(required = true, name = "id") int id) {
+	@GetMapping(path = "{id}")
+	public DataResult<GetByIdColorDto> getById(@PathVariable(required = true, name = "id") int id) {
 		return this.colorService.getById(id);
 	}
 	
-	@PutMapping("/update/{colorName}")
-	public void update(@PathVariable(required = true, name="colorName") String colorName, 
+	@PostMapping
+	public Result add(@RequestBody CreateColorRequest createColorRequest) {
+		return this.colorService.add(createColorRequest);
+	}
+	
+	@PutMapping(path = {"id"})
+	public Result update(@PathVariable(required = true, name="id") int id, 
 				@RequestBody UpdateColorRequest updateColorRequest) {
-		this.colorService.update(updateColorRequest, colorName);
+		return this.colorService.update(id, updateColorRequest);
+	}
+	
+	@DeleteMapping(path = "{id}")
+	public Result delete(@PathVariable(required = true, name="id") int id) {
+		return this.colorService.delete(id);
 	}
 }

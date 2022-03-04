@@ -7,5 +7,4 @@ import com.turkcell.rentacar.entities.concretes.Car;
 
 @Repository
 public interface CarDao extends JpaRepository<Car, Integer> {
-	Car findByCarName(String name);
 }

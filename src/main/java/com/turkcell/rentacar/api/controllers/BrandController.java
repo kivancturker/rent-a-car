@@ -3,6 +3,7 @@ package com.turkcell.rentacar.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import com.turkcell.rentacar.business.dtos.GetByIdBrandDto;
 import com.turkcell.rentacar.business.dtos.ListBrandDto;
 import com.turkcell.rentacar.business.requests.CreateBrandRequest;
 import com.turkcell.rentacar.business.requests.UpdateBrandRequest;
+import com.turkcell.rentacar.core.utils.results.DataResult;
+import com.turkcell.rentacar.core.utils.results.Result;
 
 @RestController
 @RequestMapping("/api/brands")
@@ -28,24 +31,31 @@ public class BrandController {
 		this.brandService = brandService;
 	}
 	
-	@GetMapping("/getall")
-	public List<ListBrandDto> getAll() {
+	@GetMapping
+	public DataResult<List<ListBrandDto>> getAll() {
 		return this.brandService.getAll();
 	}
 	
-	@PostMapping("/add")
-	public void add(@RequestBody CreateBrandRequest createProductRequest) {
-		this.brandService.add(createProductRequest);
-	}
-	
-	@GetMapping(path = {"/getbyid", "/getbyid/{id}"})
-	public GetByIdBrandDto getById(@PathVariable(required = true, name = "id") int id) {
+	@GetMapping(path = "{id}")
+	public DataResult<GetByIdBrandDto> getById(@PathVariable(required=true, name="id") int id) {
 		return this.brandService.getById(id);
 	}
 	
-	@PutMapping("/update/{brandName}")
-	public void update(@PathVariable(required = true, name="brandName") String brandName, 
+	@PostMapping
+	public Result add(@RequestBody CreateBrandRequest createProductRequest) {
+		return this.brandService.add(createProductRequest);
+	}
+	
+	
+	
+	@PutMapping(path = "{id}")
+	public Result  update(@PathVariable(required = true, name="id") int id, 
 				@RequestBody UpdateBrandRequest updateBrandRequest) {
-		this.brandService.update(updateBrandRequest, brandName);
+		return this.brandService.update(id, updateBrandRequest);
+	}
+	
+	@DeleteMapping(path = "{id}")
+	public Result  delete(@PathVariable(required = true, name="id") int id) {
+		return this.brandService.delete(id);
 	}
 }
