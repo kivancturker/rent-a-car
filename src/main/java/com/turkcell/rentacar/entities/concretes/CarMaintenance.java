@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,18 +20,21 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="colors")
 @Entity
-public class Color {
-	
+@Table(name="carMaintenances")
+public class CarMaintenance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="color_id", nullable = false, unique = true)
-	private int colorId;
+	@Column(name="car_maintenance_id")
+	private int carMaintenanceId;
 	
-	@Column(name="color_name", nullable = false, unique = true, length = 30)
-	private String colorName;
+	@Column(name="description")
+	private String description;
 	
-	@OneToMany(mappedBy="color")
-	private List<Car> cars;
+	@Column(name="return_date")
+	private LocalDate returnDate;
+	
+	@ManyToOne
+	@JoinColumn(name="car_id")
+	private Car car;
 }
