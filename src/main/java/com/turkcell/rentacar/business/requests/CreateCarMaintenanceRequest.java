@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCarMaintenanceRequest {
-	//@NotNull
-	//@Size(min = 2, max = 255, message = "Invalid Size for description")
+	@NotNull
+	@Size(min = 2, max = 255, message = "Invalid Size for description")
 	private String description;
 	
-	//@NotNull
+	@NotNull
 	private int carId;
 }

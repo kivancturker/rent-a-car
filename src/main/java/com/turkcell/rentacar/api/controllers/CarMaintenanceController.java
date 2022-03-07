@@ -44,15 +44,14 @@ public class CarMaintenanceController {
 	}
 	
 	@PostMapping
-	public Result add(@RequestBody CreateCarMaintenanceRequest createCarMaintenanceRequest) {
+	public Result add(@RequestBody @Valid CreateCarMaintenanceRequest createCarMaintenanceRequest) {
 		return this.carMaintenanceService.add(createCarMaintenanceRequest);
 	}
 	
 	
-	
 	@PutMapping(path = "{id}")
 	public Result update(@PathVariable(required = true, name="id") int id, 
-				@RequestBody UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
+				@RequestBody @Valid UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
 		return this.carMaintenanceService.update(id, updateCarMaintenanceRequest);
 	}
 	

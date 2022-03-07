@@ -45,8 +45,11 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
 	@Override
 	public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) {
-		CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);
+		CarMaintenance carMaintenance  = this.modelMapperService.forRequest()
+				.map(createCarMaintenanceRequest, CarMaintenance.class);
+		carMaintenance.setId(0);
 		this.carMaintenanceDao.save(carMaintenance);
+		
 		return new SuccessResult("Car Maintenance Added");
 	}
 
@@ -62,9 +65,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 	public Result update(int id, UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
 		CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(updateCarMaintenanceRequest, CarMaintenance.class);
 		CarMaintenance carMaintenanceToUpdate = this.carMaintenanceDao.getById(id);
-		carMaintenanceToUpdate.setDescription(carMaintenance.getDescription());
 		carMaintenanceToUpdate.setReturnDate(carMaintenance.getReturnDate());
-		carMaintenanceToUpdate.setCar(carMaintenance.getCar());
 		
 		this.carMaintenanceDao.save(carMaintenanceToUpdate);
 		return new SuccessResult("Car Maintenance Updated");

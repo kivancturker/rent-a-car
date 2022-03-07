@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetByIdCarMaintenanceDto {
-	private int carMaintenanceId;
+	private int id;
 
 	private String description;
 	
