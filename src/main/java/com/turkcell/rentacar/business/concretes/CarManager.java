@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.GetByIdCarDto;
 import com.turkcell.rentacar.business.dtos.ListCarDto;
 import com.turkcell.rentacar.business.requests.CreateCarRequest;
 import com.turkcell.rentacar.business.requests.UpdateCarRequest;
+import com.turkcell.rentacar.core.helpers.IdValidator;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -49,6 +50,8 @@ public class CarManager implements CarService {
 
 	@Override
 	public DataResult<GetByIdCarDto> getById(int id) {
+		IdValidator.checkIfIdValid(id, this.carDao);
+		
 		var result = this.carDao.getById(id);
 		GetByIdCarDto response = this.modelMapperService.forDto().map(result, GetByIdCarDto.class);
 		return new SuccessDataResult<GetByIdCarDto>(response);
@@ -56,6 +59,8 @@ public class CarManager implements CarService {
 
 	@Override
 	public Result update(int id, UpdateCarRequest updateCarRequest) {
+		IdValidator.checkIfIdValid(id, this.carDao);
+		
 		Car car = this.modelMapperService.forRequest().map(updateCarRequest, Car.class);
 		Car carToUpdate = this.carDao.getById(id);
 		carToUpdate.setBrand(car.getBrand());
@@ -70,6 +75,8 @@ public class CarManager implements CarService {
 
 	@Override
 	public Result delete(int id) {
+		IdValidator.checkIfIdValid(id, this.carDao);
+		
 		this.carDao.deleteById(id);
 		return new SuccessResult("Car Deleted");
 	}

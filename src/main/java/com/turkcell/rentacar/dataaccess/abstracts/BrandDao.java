@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.turkcell.rentacar.entities.concretes.Brand;
 
 @Repository
-public interface BrandDao extends JpaRepository<Brand, Integer>{
+public interface BrandDao extends JpaRepository<Brand, Integer> {
 }

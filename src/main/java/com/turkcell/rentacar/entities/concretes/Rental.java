@@ -1,6 +1,7 @@
 package com.turkcell.rentacar.entities.concretes;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -41,5 +43,7 @@ public class Rental {
 	@Column(name = "returnDate")
 	private LocalDate returnDate;
 	
+	@OneToMany(mappedBy = "rental")
+	private List<AdditionalService> additionalServices;
 	
 }
