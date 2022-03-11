@@ -30,14 +30,12 @@ public class RentalManager implements RentalService {
 	 */
 	
 	private RentalDao rentalDao;
-	private CarMaintenanceDao carMaintenanceDao;
 	private ModelMapperService modelMapperService;
 	
 	@Autowired
-	public RentalManager(RentalDao rentalDao, ModelMapperService modelMapperService, CarMaintenanceDao carMaintenanceDao) {
+	public RentalManager(RentalDao rentalDao, ModelMapperService modelMapperService) {
 		this.rentalDao = rentalDao;
 		this.modelMapperService = modelMapperService;
-		this.carMaintenanceDao = carMaintenanceDao;
 	}
 
 	@Override
@@ -62,10 +60,10 @@ public class RentalManager implements RentalService {
 	@Override
 	public Result add(CreateRentalRequest createRentalRequest) {
 		Rental request = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
-		if (isCarInMaintenance(request))
+		/*if (isCarInMaintenance(request))
 		{
 			return new ErrorResult("Rental.InMaintenance");
-		}
+		}*/
 		
 		this.rentalDao.save(request);
 		
@@ -82,7 +80,15 @@ public class RentalManager implements RentalService {
 		updated.setCar(request.getCar());
 		updated.setCustomer(request.getCustomer());
 		updated.setAdditionalServices(request.getAdditionalServices());
+		updated.setReturnCity(request.getReturnCity());
+		updated.setRentCity(request.getRentCity());
 		
+		if (!isSameCity(updated))
+		{
+			updated.setPrice(750);
+		}
+		
+		this.rentalDao.save(updated);
 		return new SuccessResult("Rental.Update");
 	}
 
@@ -102,6 +108,10 @@ public class RentalManager implements RentalService {
 			}
 		}
 		return false;
+	}
+	
+	private boolean isSameCity (Rental rent) {
+		return rent.getRentCity().getId() == rent.getReturnCity().getId();
 	}
 	
 }

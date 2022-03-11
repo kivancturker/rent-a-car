@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
+import com.turkcell.rentacar.entities.concretes.City;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class CreateRentalRequest {
 	private int customerId;
 	@NotNull
 	private int carId;
-	private List<AdditionalService> additionalServiceId;
+	private List<Integer> additionalServiceId;
+	private int rentCityId;
 }

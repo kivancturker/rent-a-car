@@ -46,4 +46,15 @@ public class Rental {
 	@OneToMany(mappedBy = "rental")
 	private List<AdditionalService> additionalServices;
 	
+	@ManyToOne
+	@JoinColumn(name = "rent_city_id")
+	private City rentCity;
+	
+	@ManyToOne
+	@JoinColumn(name = "return_city_id")
+	private City returnCity;
+	
+	@Column(name = "price")
+	private double price;
+	
 }

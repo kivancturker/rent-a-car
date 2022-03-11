@@ -1,5 +1,12 @@
 package com.turkcell.rentacar.business.dtos.customers;
 
-public class GetByIdCustomerDto {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class GetByIdCustomerDto {
+	private ListCustomerDto listCustomerDto;
 }
