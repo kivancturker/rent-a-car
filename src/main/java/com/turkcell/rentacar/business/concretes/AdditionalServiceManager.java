@@ -1,7 +1,9 @@
 package com.turkcell.rentacar.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.AdditionalServiceService;
@@ -9,40 +11,69 @@ import com.turkcell.rentacar.business.dtos.additionalservices.GetByIdAdditionalS
 import com.turkcell.rentacar.business.dtos.additionalservices.ListAdditionalServiceDto;
 import com.turkcell.rentacar.business.requests.additionalservices.CreateAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.additionalservices.UpdateAdditionalServiceRequest;
+import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
+import com.turkcell.rentacar.core.utils.results.SuccessDataResult;
+import com.turkcell.rentacar.core.utils.results.SuccessResult;
+import com.turkcell.rentacar.dataaccess.abstracts.AdditionalServiceDao;
+import com.turkcell.rentacar.entities.concretes.AdditionalService;
 
 @Service
 public class AdditionalServiceManager implements AdditionalServiceService {
+	
+	private AdditionalServiceDao additionalServiceDao;
+	private ModelMapperService modelMapperService;
+	
+	
+	@Autowired
+	public AdditionalServiceManager(AdditionalServiceDao additionalServiceDao, ModelMapperService modelMapperService) {
+		this.additionalServiceDao = additionalServiceDao;
+		this.modelMapperService = modelMapperService;
+	}
 
 	@Override
 	public DataResult<List<ListAdditionalServiceDto>> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		var result = this.additionalServiceDao.findAll();
+		List<ListAdditionalServiceDto> response = result.stream()
+				.map(additionalService -> this.modelMapperService.forDto()
+				.map(result, ListAdditionalServiceDto.class))
+				.collect(Collectors.toList());
+				
+		return new SuccessDataResult<List<ListAdditionalServiceDto>>(response);
 	}
 
 	@Override
 	public Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		AdditionalService request = this.modelMapperService.forRequest().map(createAdditionalServiceRequest, AdditionalService.class);
+		this.additionalServiceDao.save(request);
+		
+		return new SuccessResult("AdditionalService.Add");
 	}
 
 	@Override
 	public DataResult<GetByIdAdditionalServiceDto> getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		var result = this.additionalServiceDao.findById(id);
+		GetByIdAdditionalServiceDto response = this.modelMapperService.forDto().map(result, GetByIdAdditionalServiceDto.class);
+		
+		return new SuccessDataResult<GetByIdAdditionalServiceDto>(response); 
 	}
 
 	@Override
 	public Result update(int id, UpdateAdditionalServiceRequest updateAdditionalServiceRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		AdditionalService request = this.modelMapperService.forRequest().map(updateAdditionalServiceRequest, AdditionalService.class);
+		AdditionalService updated = this.additionalServiceDao.getById(id);
+		
+		updated.setRental(request.getRental());
+		updated.setServiceName(request.getServiceName());
+		
+		return new SuccessResult("AdditionalService.Update");
 	}
 
 	@Override
 	public Result delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		this.additionalServiceDao.deleteById(id);
+		return new SuccessResult("AdditionalService.Delete");
 	}
 
 }
