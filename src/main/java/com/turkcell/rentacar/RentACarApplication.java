@@ -52,5 +52,12 @@ public class RentACarApplication {
 				"BusinessException.Errors");
 		return errorDataResult;
 	}
+	
+	@ExceptionHandler
+	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
+	public ErrorDataResult<Object> handleException(Exception exception) {
+		ErrorDataResult<Object>  errorDataResult = new ErrorDataResult<Object>(exception);
+		return errorDataResult;
+	}
 
 }
