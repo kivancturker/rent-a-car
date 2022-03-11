@@ -40,7 +40,7 @@ public class RentalManager implements RentalService {
 		var result = this.rentalDao.findAll();
 		List<ListRentalDto> response = result.stream()
 				.map(rental -> this.modelMapperService.forDto()
-				.map(result, ListRentalDto.class))
+				.map(rental, ListRentalDto.class))
 				.collect(Collectors.toList());
 				
 		return new SuccessDataResult<List<ListRentalDto>>(response);

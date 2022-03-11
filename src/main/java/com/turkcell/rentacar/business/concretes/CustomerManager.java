@@ -1,6 +1,7 @@
 package com.turkcell.rentacar.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,10 @@ import com.turkcell.rentacar.business.requests.customer.UpdateCustomerRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
+import com.turkcell.rentacar.core.utils.results.SuccessDataResult;
+import com.turkcell.rentacar.core.utils.results.SuccessResult;
 import com.turkcell.rentacar.dataaccess.abstracts.CustomerDao;
+import com.turkcell.rentacar.entities.concretes.Customer;
 
 @Service
 public class CustomerManager implements CustomerService {
@@ -30,32 +34,44 @@ public class CustomerManager implements CustomerService {
 
 	@Override
 	public DataResult<List<ListCustomerDto>> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		var result = this.customerDao.findAll();
+		List<ListCustomerDto> response = result.stream()
+				.map(customer -> this.modelMapperService.forDto()
+				.map(customer, ListCustomerDto.class))
+				.collect(Collectors.toList());
+				
+		return new SuccessDataResult<List<ListCustomerDto>>(response);
 	}
 
 	@Override
 	public DataResult<GetByIdCustomerDto> getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		var result = this.customerDao.getById(id);
+		GetByIdCustomerDto response = this.modelMapperService.forDto().map(result, GetByIdCustomerDto.class);
+		
+		return new SuccessDataResult<GetByIdCustomerDto>(response);
 	}
 
 	@Override
 	public Result add(CreateCustomerRequest createCustomerRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = this.modelMapperService.forRequest().map(createCustomerRequest, Customer.class);
+		this.customerDao.save(customer);
+		return new SuccessResult("Customer.Add");
 	}
 
 	@Override
 	public Result update(int id, UpdateCustomerRequest updateCustomerRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = this.modelMapperService.forRequest().map(updateCustomerRequest, Customer.class);
+		Customer updated = this.customerDao.getById(id);
+		updated.setRentals(customer.getRentals());
+		
+		this.customerDao.save(updated);
+		return new SuccessResult("Customer.Update");
 	}
 
 	@Override
 	public Result delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		this.customerDao.deleteById(id);
+		return new SuccessResult("Customer.Delete");
 	}
 
 }
