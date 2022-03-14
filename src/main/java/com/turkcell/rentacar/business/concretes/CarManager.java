@@ -51,7 +51,6 @@ public class CarManager implements CarService {
 	@Override
 	public DataResult<GetByIdCarDto> getById(int id) {
 		IdValidationUtils.checkIfIdValid(id, this.carDao);
-		
 		var result = this.carDao.getById(id);
 		GetByIdCarDto response = this.modelMapperService.forDto().map(result, GetByIdCarDto.class);
 		return new SuccessDataResult<GetByIdCarDto>(response);
