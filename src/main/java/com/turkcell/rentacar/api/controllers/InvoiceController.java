@@ -1,20 +1,22 @@
 package com.turkcell.rentacar.api.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentacar.business.abstracts.InvoiceService;
 import com.turkcell.rentacar.business.dtos.invoices.GetByIdInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoices.ListInvoiceDto;
 import com.turkcell.rentacar.business.requests.invoices.CreateInvoiceRequest;
-import com.turkcell.rentacar.business.requests.invoices.DateInvoiceRequest;
 import com.turkcell.rentacar.business.requests.invoices.UpdateInvoiceRequest;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -52,13 +54,10 @@ public class InvoiceController {
 		return this.invoiceService.delete(id);
 	}
 	
-	/*@GetMapping(path="getByDate")
-	public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, LocalDate endDate) {
-		return this.invoiceService.getAll();
-	}*/
-	
-	@PostMapping("/getDate")
-    public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(@RequestBody DateInvoiceRequest dateInvoiceRequest) {
-		return this.invoiceService.getAllBetweenTwoDates(dateInvoiceRequest);
-    }
+	@GetMapping("/getAllBetweenTwoDates")
+	public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(
+			@RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
+			@RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) {
+		return invoiceService.getAllBetweenTwoDates(fromDate, toDate);
+	}
 }

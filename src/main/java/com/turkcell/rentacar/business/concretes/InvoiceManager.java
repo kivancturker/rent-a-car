@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.business.concretes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,6 @@ import com.turkcell.rentacar.business.abstracts.InvoiceService;
 import com.turkcell.rentacar.business.dtos.invoices.GetByIdInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoices.ListInvoiceDto;
 import com.turkcell.rentacar.business.requests.invoices.CreateInvoiceRequest;
-import com.turkcell.rentacar.business.requests.invoices.DateInvoiceRequest;
 import com.turkcell.rentacar.business.requests.invoices.UpdateInvoiceRequest;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
@@ -72,11 +72,9 @@ public class InvoiceManager implements InvoiceService {
 	}
 
 	@Override
-	public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(DateInvoiceRequest dateInvoiceRequest) {
-
-		List<Invoice> result = invoiceDao.findAllByBillingDateLessThanEqualAndBillingDateGreaterThanEqual(dateInvoiceRequest.getStartDate(),dateInvoiceRequest.getEndDate());
-		//DateInvoiceRequest invoiceRequest= new DateInvoiceRequest(startDate, endDate);
-		List<ListInvoiceDto> response = result.stream()
+	public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(LocalDate fromDate, LocalDate toDate) {
+		List<Invoice> invoices = this.invoiceDao.findAllByBillingDateLessThanEqualAndBillingDateGreaterThanEqual(fromDate, toDate);
+		List<ListInvoiceDto> response = invoices.stream()
 				.map(invoice -> this.modelMapperService.forDto().map(invoice, ListInvoiceDto.class))
 				.collect(Collectors.toList());
 		return new SuccessDataResult<List<ListInvoiceDto>>(response);
