@@ -73,7 +73,7 @@ public class InvoiceManager implements InvoiceService {
 
 	@Override
 	public DataResult<List<ListInvoiceDto>> getAllBetweenTwoDates(LocalDate fromDate, LocalDate toDate) {
-		List<Invoice> invoices = this.invoiceDao.findAllByBillingDateLessThanEqualAndBillingDateGreaterThanEqual(fromDate, toDate);
+		List<Invoice> invoices = this.invoiceDao.findByBillingDateBetween(fromDate, toDate);
 		List<ListInvoiceDto> response = invoices.stream()
 				.map(invoice -> this.modelMapperService.forDto().map(invoice, ListInvoiceDto.class))
 				.collect(Collectors.toList());
