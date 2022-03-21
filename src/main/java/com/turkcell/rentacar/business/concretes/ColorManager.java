@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.GetByIdColorDto;
 import com.turkcell.rentacar.business.dtos.ListColorDto;
 import com.turkcell.rentacar.business.requests.CreateColorRequest;
 import com.turkcell.rentacar.business.requests.UpdateColorRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -44,7 +45,7 @@ public class ColorManager implements ColorService {
 	public Result add(CreateColorRequest createColorRequest) {
 		Color color = this.modelMapperService.forRequest().map(createColorRequest, Color.class);
 		this.colorDao.save(color);
-		return new SuccessResult("Color Added.");
+		return new SuccessResult(Messages.COLOR_ADD);
 	}
 
 	@Override
@@ -61,13 +62,13 @@ public class ColorManager implements ColorService {
 		colorToUpdate.setColorName(color.getColorName());
 		
 		this.colorDao.save(colorToUpdate);
-		return new SuccessResult("Color Updated.");
+		return new SuccessResult(Messages.COLOR_UPDATE);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.colorDao.deleteById(id);
-		return new SuccessResult("Color Deleted.");
+		return new SuccessResult(Messages.COLOR_DELETE);
 	}
 
 }

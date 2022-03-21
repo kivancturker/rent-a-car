@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.additionalservices.GetByIdAdditionalS
 import com.turkcell.rentacar.business.dtos.additionalservices.ListAdditionalServiceDto;
 import com.turkcell.rentacar.business.requests.additionalservices.CreateAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.additionalservices.UpdateAdditionalServiceRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -48,7 +49,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 		AdditionalService request = this.modelMapperService.forRequest().map(createAdditionalServiceRequest, AdditionalService.class);
 		this.additionalServiceDao.save(request);
 		
-		return new SuccessResult("AdditionalService.Add");
+		return new SuccessResult(Messages.ADDITIONAL_SERVICE_ADD);
 	}
 
 	@Override
@@ -67,13 +68,13 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 		updated.setRental(request.getRental());
 		updated.setServiceName(request.getServiceName());
 		
-		return new SuccessResult("AdditionalService.Update");
+		return new SuccessResult(Messages.ADDITIONAL_SERVICE_UPDATE);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.additionalServiceDao.deleteById(id);
-		return new SuccessResult("AdditionalService.Delete");
+		return new SuccessResult(Messages.ADDITIONAL_SERVICE_DELETE);
 	}
 
 }

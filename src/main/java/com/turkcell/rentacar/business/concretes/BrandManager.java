@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.GetByIdBrandDto;
 import com.turkcell.rentacar.business.dtos.ListBrandDto;
 import com.turkcell.rentacar.business.requests.CreateBrandRequest;
 import com.turkcell.rentacar.business.requests.UpdateBrandRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -48,7 +49,7 @@ public class BrandManager implements BrandService {
 	public Result add(@RequestBody CreateBrandRequest createBrandRequest) {
 		Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
 		this.brandDao.save(brand);
-		return new SuccessResult("Marka eklendi.");
+		return new SuccessResult();
 	}
 
 	@Override
@@ -66,13 +67,13 @@ public class BrandManager implements BrandService {
 		brandToUpdate.setBrandName(brand.getBrandName());
 		
 		this.brandDao.save(brandToUpdate);
-		return new SuccessResult("Marka güncellendi.");
+		return new SuccessResult(Messages.BRAND_UPDATE);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.brandDao.deleteById(id);
-		return new SuccessResult("Marka silindi.");
+		return new SuccessResult(Messages.BRAND_DELETE);
 	}
 	
 }

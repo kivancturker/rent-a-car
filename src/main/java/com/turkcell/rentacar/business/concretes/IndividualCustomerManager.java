@@ -10,6 +10,7 @@ import com.turkcell.rentacar.business.dtos.individualcustomer.GetByIdIndividualC
 import com.turkcell.rentacar.business.dtos.individualcustomer.ListIndividualCustomerDto;
 import com.turkcell.rentacar.business.requests.individualcustomer.CreateIndividualCustomerRequest;
 import com.turkcell.rentacar.business.requests.individualcustomer.UpdateIndividualCustomerRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.helpers.IdValidationUtils;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
@@ -51,7 +52,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 		
 		IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
 		this.individualCustomerDao.save(individualCustomer);
-		return new SuccessResult("IndividualCustomer.Add");
+		return new SuccessResult(Messages.INDIVIDUAL_CUSTOMER_ADD);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 		
 		
 		this.individualCustomerDao.save(updated);
-		return new SuccessResult("IndividualCustomer.Update");
+		return new SuccessResult(Messages.INDIVIDUAL_CUSTOMER_UPDATE);
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 		
 		IdValidationUtils.checkIfIdValid(id, this.individualCustomerDao);
 		this.individualCustomerDao.deleteById(id);
-		return new SuccessResult("IndividualCustomer.Delete");
+		return new SuccessResult(Messages.INDIVIDUAL_CUSTOMER_DELETE);
 	}
 
 }

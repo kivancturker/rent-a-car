@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.GetByIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.ListCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.CreateCarMaintenanceRequest;
 import com.turkcell.rentacar.business.requests.UpdateCarMaintenanceRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -50,7 +51,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		carMaintenance.setId(0);
 		this.carMaintenanceDao.save(carMaintenance);
 		
-		return new SuccessResult("Car Maintenance Added");
+		return new SuccessResult(Messages.CAR_MAINTENANCE_ADD);
 	}
 
 	@Override
@@ -68,13 +69,13 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		carMaintenanceToUpdate.setReturnDate(carMaintenance.getReturnDate());
 		
 		this.carMaintenanceDao.save(carMaintenanceToUpdate);
-		return new SuccessResult("Car Maintenance Updated");
+		return new SuccessResult(Messages.CAR_MAINTENANCE_UPDATE);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.carMaintenanceDao.deleteById(id);
-		return new SuccessResult("Car Maintenance Deleted");
+		return new SuccessResult(Messages.CAR_MAINTENANCE_DELETE);
 	}
 
 }

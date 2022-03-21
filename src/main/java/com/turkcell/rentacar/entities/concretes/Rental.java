@@ -31,14 +31,14 @@ public class Rental {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "car_id", nullable = false)
+	@JoinColumn(name = "car_id")
 	private Car car;
 	
 	@ManyToOne
-	@JoinColumn(name = "customer_id", nullable = false)
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
-	@Column(name = "rent_date", nullable = false)
+	@Column(name = "rent_date")
 	private LocalDate rentDate;
 	
 	@Column(name = "returnDate")

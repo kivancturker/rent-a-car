@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.customers.GetByIdCustomerDto;
 import com.turkcell.rentacar.business.dtos.customers.ListCustomerDto;
 import com.turkcell.rentacar.business.requests.customer.CreateCustomerRequest;
 import com.turkcell.rentacar.business.requests.customer.UpdateCustomerRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
@@ -55,7 +56,7 @@ public class CustomerManager implements CustomerService {
 	public Result add(CreateCustomerRequest createCustomerRequest) {
 		Customer customer = this.modelMapperService.forRequest().map(createCustomerRequest, Customer.class);
 		this.customerDao.save(customer);
-		return new SuccessResult("Customer.Add");
+		return new SuccessResult(Messages.CUSTOMER_ADD);
 	}
 
 	@Override
@@ -65,13 +66,13 @@ public class CustomerManager implements CustomerService {
 		updated.setRentals(customer.getRentals());
 		
 		this.customerDao.save(updated);
-		return new SuccessResult("Customer.Update");
+		return new SuccessResult(Messages.CUSTOMER_UPDATE);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.customerDao.deleteById(id);
-		return new SuccessResult("Customer.Delete");
+		return new SuccessResult(Messages.CUSTOMER_DELETE);
 	}
 
 }

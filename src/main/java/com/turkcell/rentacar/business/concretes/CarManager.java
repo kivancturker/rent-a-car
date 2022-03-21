@@ -11,6 +11,7 @@ import com.turkcell.rentacar.business.dtos.GetByIdCarDto;
 import com.turkcell.rentacar.business.dtos.ListCarDto;
 import com.turkcell.rentacar.business.requests.CreateCarRequest;
 import com.turkcell.rentacar.business.requests.UpdateCarRequest;
+import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.helpers.IdValidationUtils;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;
@@ -45,7 +46,7 @@ public class CarManager implements CarService {
 	public Result add(CreateCarRequest createCarRequest) {
 		Car car = this.modelMapperService.forRequest().map(createCarRequest, Car.class);
 		this.carDao.save(car);
-		return new SuccessResult("Car Added");
+		return new SuccessResult(Messages.CAR_ADD);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class CarManager implements CarService {
 		carToUpdate.setModelYear(car.getModelYear());
 		
 		this.carDao.save(carToUpdate);
-		return new SuccessResult("Car Updated");
+		return new SuccessResult(Messages.CAR_UPDATE);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class CarManager implements CarService {
 		IdValidationUtils.checkIfIdValid(id, this.carDao);
 		
 		this.carDao.deleteById(id);
-		return new SuccessResult("Car Deleted");
+		return new SuccessResult(Messages.CAR_DELETE);
 	}
 
 }
