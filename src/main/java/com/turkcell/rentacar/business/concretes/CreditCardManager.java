@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.CreditCardService;
-import com.turkcell.rentacar.business.dtos.creditcard.GetByIdCreditCardDto;
-import com.turkcell.rentacar.business.dtos.creditcard.ListCreditCardDto;
-import com.turkcell.rentacar.business.requests.creditcard.CreateCreditCardRequest;
-import com.turkcell.rentacar.business.requests.creditcard.UpdateCreditCardRequest;
+import com.turkcell.rentacar.business.dtos.creditcards.GetByIdCreditCardDto;
+import com.turkcell.rentacar.business.dtos.creditcards.ListCreditCardDto;
+import com.turkcell.rentacar.business.requests.creditcards.CreateCreditCardRequest;
+import com.turkcell.rentacar.business.requests.creditcards.UpdateCreditCardRequest;
 import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;
 import com.turkcell.rentacar.core.utils.results.DataResult;

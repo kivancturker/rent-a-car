@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentacar.business.abstracts.CreditCardService;
-import com.turkcell.rentacar.business.dtos.creditcard.GetByIdCreditCardDto;
-import com.turkcell.rentacar.business.dtos.creditcard.ListCreditCardDto;
-import com.turkcell.rentacar.business.requests.creditcard.CreateCreditCardRequest;
-import com.turkcell.rentacar.business.requests.creditcard.UpdateCreditCardRequest;
+import com.turkcell.rentacar.business.dtos.creditcards.GetByIdCreditCardDto;
+import com.turkcell.rentacar.business.dtos.creditcards.ListCreditCardDto;
+import com.turkcell.rentacar.business.requests.creditcards.CreateCreditCardRequest;
+import com.turkcell.rentacar.business.requests.creditcards.UpdateCreditCardRequest;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
 

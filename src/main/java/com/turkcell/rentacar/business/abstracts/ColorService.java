@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.turkcell.rentacar.business.dtos.GetByIdColorDto;
-import com.turkcell.rentacar.business.dtos.ListColorDto;
-import com.turkcell.rentacar.business.requests.CreateColorRequest;
-import com.turkcell.rentacar.business.requests.UpdateColorRequest;
+import com.turkcell.rentacar.business.dtos.colors.GetByIdColorDto;
+import com.turkcell.rentacar.business.dtos.colors.ListColorDto;
+import com.turkcell.rentacar.business.requests.colors.CreateColorRequest;
+import com.turkcell.rentacar.business.requests.colors.UpdateColorRequest;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
 

@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.IndividualCustomerService;
-import com.turkcell.rentacar.business.dtos.individualcustomer.GetByIdIndividualCustomerDto;
-import com.turkcell.rentacar.business.dtos.individualcustomer.ListIndividualCustomerDto;
-import com.turkcell.rentacar.business.requests.individualcustomer.CreateIndividualCustomerRequest;
-import com.turkcell.rentacar.business.requests.individualcustomer.UpdateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.dtos.individualcustomers.GetByIdIndividualCustomerDto;
+import com.turkcell.rentacar.business.dtos.individualcustomers.ListIndividualCustomerDto;
+import com.turkcell.rentacar.business.requests.individualcustomers.CreateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.requests.individualcustomers.UpdateIndividualCustomerRequest;
 import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.helpers.IdValidationUtils;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;

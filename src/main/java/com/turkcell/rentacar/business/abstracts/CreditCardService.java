@@ -2,10 +2,10 @@ package com.turkcell.rentacar.business.abstracts;
 
 import java.util.List;
 
-import com.turkcell.rentacar.business.dtos.creditcard.GetByIdCreditCardDto;
-import com.turkcell.rentacar.business.dtos.creditcard.ListCreditCardDto;
-import com.turkcell.rentacar.business.requests.creditcard.CreateCreditCardRequest;
-import com.turkcell.rentacar.business.requests.creditcard.UpdateCreditCardRequest;
+import com.turkcell.rentacar.business.dtos.creditcards.GetByIdCreditCardDto;
+import com.turkcell.rentacar.business.dtos.creditcards.ListCreditCardDto;
+import com.turkcell.rentacar.business.requests.creditcards.CreateCreditCardRequest;
+import com.turkcell.rentacar.business.requests.creditcards.UpdateCreditCardRequest;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
 

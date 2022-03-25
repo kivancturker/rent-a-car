@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentacar.business.abstracts.BrandService;
-import com.turkcell.rentacar.business.dtos.GetByIdBrandDto;
-import com.turkcell.rentacar.business.dtos.ListBrandDto;
-import com.turkcell.rentacar.business.requests.CreateBrandRequest;
-import com.turkcell.rentacar.business.requests.UpdateBrandRequest;
+import com.turkcell.rentacar.business.dtos.brands.GetByIdBrandDto;
+import com.turkcell.rentacar.business.dtos.brands.ListBrandDto;
+import com.turkcell.rentacar.business.requests.brands.CreateBrandRequest;
+import com.turkcell.rentacar.business.requests.brands.UpdateBrandRequest;
 import com.turkcell.rentacar.core.utils.results.DataResult;
 import com.turkcell.rentacar.core.utils.results.Result;
 

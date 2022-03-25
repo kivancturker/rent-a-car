@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.CarService;
-import com.turkcell.rentacar.business.dtos.GetByIdCarDto;
-import com.turkcell.rentacar.business.dtos.ListCarDto;
-import com.turkcell.rentacar.business.requests.CreateCarRequest;
-import com.turkcell.rentacar.business.requests.UpdateCarRequest;
+import com.turkcell.rentacar.business.dtos.cars.GetByIdCarDto;
+import com.turkcell.rentacar.business.dtos.cars.ListCarDto;
+import com.turkcell.rentacar.business.requests.cars.CreateCarRequest;
+import com.turkcell.rentacar.business.requests.cars.UpdateCarRequest;
 import com.turkcell.rentacar.core.utils.constants.Messages;
 import com.turkcell.rentacar.core.utils.helpers.IdValidationUtils;
 import com.turkcell.rentacar.core.utils.mappers.ModelMapperService;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.CreditCardService;
 import com.turkcell.rentacar.business.abstracts.PosService;
-import com.turkcell.rentacar.business.dtos.creditcard.GetByIdCreditCardDto;
+import com.turkcell.rentacar.business.dtos.creditcards.GetByIdCreditCardDto;
 import com.turkcell.rentacar.business.outservices.FakeHalkBankManager;
 import com.turkcell.rentacar.business.requests.payments.CreatePaymentRequest;
 import com.turkcell.rentacar.core.utils.results.Result;
