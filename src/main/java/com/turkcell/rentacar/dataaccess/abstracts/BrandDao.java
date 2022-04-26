@@ -7,4 +7,6 @@ import com.turkcell.rentacar.entities.concretes.Brand;
 
 @Repository
 public interface BrandDao extends JpaRepository<Brand, Integer> {
+	
+	Brand findByBrandName(String brandName);
 }

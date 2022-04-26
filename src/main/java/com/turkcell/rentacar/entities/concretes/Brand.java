@@ -23,10 +23,10 @@ public class Brand {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="brand_id", nullable = false, unique = true)
+	@Column(name="brand_id")
 	private int brandId;
 	
-	@Column(name="brand_name", nullable = false, unique = true, length = 50)
+	@Column(name="brand_name")
 	private String brandName;
 	
 	@OneToMany(mappedBy="brand")

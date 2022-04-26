@@ -44,7 +44,7 @@ public class ColorController {
 		return this.colorService.add(createColorRequest);
 	}
 	
-	@PutMapping(path = {"id"})
+	@PutMapping(path = "{id}")
 	public Result update(@PathVariable(required = true, name="id") int id, 
 				@RequestBody UpdateColorRequest updateColorRequest) {
 		return this.colorService.update(id, updateColorRequest);

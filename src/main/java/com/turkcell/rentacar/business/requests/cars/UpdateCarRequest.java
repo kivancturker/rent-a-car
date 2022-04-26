@@ -8,5 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCarRequest {
-	private CreateCarRequest createCarRequest;
+	private double dailyPrice;
+	private String modelYear;
+	private String description;
+	private int brandId;
+	private int colorId;
 }
