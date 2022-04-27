@@ -1,15 +1,20 @@
 package com.turkcell.rentacar.business.concretes;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.CarMaintenanceService;
 import com.turkcell.rentacar.business.abstracts.CarService;
+import com.turkcell.rentacar.business.abstracts.RentalService;
+import com.turkcell.rentacar.business.dtos.carmaintenances.GetByCarIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.GetByIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.ListCarMaintenanceDto;
+import com.turkcell.rentacar.business.dtos.rentals.GetByCarIdRentalDto;
 import com.turkcell.rentacar.business.exceptions.BusinessException;
 import com.turkcell.rentacar.business.requests.carmaintenances.CreateCarMaintenanceRequest;
 import com.turkcell.rentacar.business.requests.carmaintenances.UpdateCarMaintenanceRequest;
@@ -30,20 +35,24 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 	private CarMaintenanceDao carMaintenanceDao;
 	private ModelMapperService modelMapperService;
 	private CarService carService;
+	private RentalService rentalService;
 	
 	@Autowired
 	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, 
 			ModelMapperService modelMapperService,
-			CarService carService) {
+			CarService carService,
+			@Lazy RentalService rentalService) {
 		
 		super();
 		this.carMaintenanceDao = carMaintenanceDao;
 		this.modelMapperService = modelMapperService;
 		this.carService = carService;
+		this.rentalService = rentalService;
 	}
 	
 	@Override
 	public DataResult<List<ListCarMaintenanceDto>> getAll() {
+		
 		var result = this.carMaintenanceDao.findAll();
 		List<ListCarMaintenanceDto> response = result.stream()
 		.map(carMaintenance -> this.modelMapperService.forDto()
@@ -58,6 +67,8 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		
 		
 		isCarExist(createCarMaintenanceRequest.getCarId());
+		
+		isCarRented(createCarMaintenanceRequest.getCarId());
 		
 		// Mapper doesn't work properly for CarMaintenance
 		// It confused with Car class
@@ -79,13 +90,15 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		
 		IdValidationUtils.checkIfIdValid(id, this.carMaintenanceDao);
 		var result = this.carMaintenanceDao.getById(id);
-		GetByIdCarMaintenanceDto response = this.modelMapperService.forDto().map(result, GetByIdCarMaintenanceDto.class);
+		GetByIdCarMaintenanceDto response = this.modelMapperService.forDto()
+				.map(result, GetByIdCarMaintenanceDto.class);
 		
 		return new SuccessDataResult<GetByIdCarMaintenanceDto>(response);
 	}
 
 	@Override
-	public Result update(int id, UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
+	public Result update(int id, 
+			UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
 		
 		IdValidationUtils.checkIfIdValid(id, this.carMaintenanceDao);
 		CarMaintenance carMaintenance = this.modelMapperService.forRequest()
@@ -104,6 +117,22 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		this.carMaintenanceDao.deleteById(id);
 		return new SuccessResult(Messages.CAR_MAINTENANCE_DELETE);
 	}
+	
+	
+	@Override
+	public DataResult<List<GetByCarIdCarMaintenanceDto>> getByCarId(int carId) {
+		
+		isCarExist(carId);
+		
+		var result = this.carMaintenanceDao.findByCarId(carId);
+		
+		List<GetByCarIdCarMaintenanceDto> response = result.stream()
+		.map(carMaintenance -> this.modelMapperService.forDto()
+		.map(carMaintenance, GetByCarIdCarMaintenanceDto.class))
+		.collect(Collectors.toList());
+		
+		return new SuccessDataResult<List<GetByCarIdCarMaintenanceDto>>(response);
+	}
 
 	private void isCarExist(int id) {
 		
@@ -112,5 +141,21 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 			throw new BusinessException(Messages.CAR_MAINTENANCE_CAR_NOT_EXIST);
 		}
 	}
+	
+	private void isCarRented(int rentalId) {
+		
+		List<GetByCarIdRentalDto> rentalDto = this.rentalService
+				.getByCarId(rentalId).getData();
+		
+		
+		for (GetByCarIdRentalDto rent : rentalDto)
+		{
+			if (Objects.isNull(rent.getReturnDate()))
+			{
+				throw new BusinessException(Messages.CAR_MAINTENANCE_CAR_RENTED);
+			}
+		}
+	}
+	
 	
 }

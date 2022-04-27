@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentacar.business.abstracts.CarMaintenanceService;
+import com.turkcell.rentacar.business.dtos.carmaintenances.GetByCarIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.GetByIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.ListCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.carmaintenances.CreateCarMaintenanceRequest;
@@ -40,13 +41,22 @@ public class CarMaintenanceController {
 	}
 	
 	@GetMapping(path = "{id}")
-	public DataResult<GetByIdCarMaintenanceDto> getById(@PathVariable(required=true, name="id") int id) {
+	public DataResult<GetByIdCarMaintenanceDto> getById(
+			@PathVariable(required=true, name="id") int id) {
 		
 		return this.carMaintenanceService.getById(id);
 	}
 	
+	@GetMapping(path = "/getByCarId/{carId}")
+	public DataResult<List<GetByCarIdCarMaintenanceDto>> getByCarId(
+			@PathVariable(required=true, name="carId") int carId) {
+		
+		return this.carMaintenanceService.getByCarId(carId);
+	}
+	
 	@PostMapping
-	public Result add(@RequestBody @Valid CreateCarMaintenanceRequest createCarMaintenanceRequest) {
+	public Result add(@RequestBody @Valid 
+			CreateCarMaintenanceRequest createCarMaintenanceRequest) {
 		
 		return this.carMaintenanceService.add(createCarMaintenanceRequest);
 	}
@@ -54,7 +64,8 @@ public class CarMaintenanceController {
 	
 	@PutMapping(path = "{id}")
 	public Result update(@PathVariable(required = true, name="id") int id, 
-				@RequestBody @Valid UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
+				@RequestBody @Valid 
+				UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
 		
 		return this.carMaintenanceService.update(id, updateCarMaintenanceRequest);
 	}

@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.turkcell.rentacar.entities.concretes.AdditionalService;
-import com.turkcell.rentacar.entities.concretes.City;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

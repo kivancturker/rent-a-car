@@ -28,7 +28,8 @@ public class Messages {
     public static final String CAR_MAINTENANCE_UPDATE = "carMaintenance.update";
     public static final String CAR_MAINTENANCE_DELETE = "carMaintenance.delete";
     public static final String CAR_MAINTENANCE_CAR_NOT_EXIST = "carMaintenance.car.notexist";
-
+    public static final String CAR_MAINTENANCE_CAR_RENTED = "carMaintenance.car.rented";
+    
     public static final String CAR_ADD = "car.add";
     public static final String CAR_UPDATE = "car.update";
     public static final String CAR_DELETE = "car.delete";
@@ -49,4 +50,11 @@ public class Messages {
     public static final String INDIVIDUAL_CUSTOMER_ADD = "individualCustomer.add";
     public static final String INDIVIDUAL_CUSTOMER_UPDATE = "individualCustomer.update";
     public static final String INDIVIDUAL_CUSTOMER_DELETE = "individualCustomer.delete";
+    
+    public static final String RENTAL_ADD = "rental.add";
+    public static final String RENTAL_UPDATE = "rental.update";
+    public static final String RENTAL_DELETE = "rental.delete";
+    public static final String RENTAL_CAR_NOT_EXIST = "rental.car.notexist";
+    public static final String RENTAL_CAR_IN_MAINTENANCE = "rental.car.inmaintenance";
+    
 }

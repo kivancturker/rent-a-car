@@ -2,6 +2,7 @@ package com.turkcell.rentacar.business.abstracts;
 
 import java.util.List;
 
+import com.turkcell.rentacar.business.dtos.carmaintenances.GetByCarIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.GetByIdCarMaintenanceDto;
 import com.turkcell.rentacar.business.dtos.carmaintenances.ListCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.carmaintenances.CreateCarMaintenanceRequest;
@@ -15,4 +16,5 @@ public interface CarMaintenanceService {
 	DataResult<GetByIdCarMaintenanceDto> getById(int id);
 	Result  update(int id, UpdateCarMaintenanceRequest updateCarMaintenanceRequest);
 	Result  delete(int id);
+	DataResult<List<GetByCarIdCarMaintenanceDto>> getByCarId(int carId);
 }
