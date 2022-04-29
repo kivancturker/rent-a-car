@@ -20,14 +20,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public abstract class User {
+public class User {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
 	@Email
-	@Column(name = "email")
+	@Column(name = "email", unique=true)
 	private String email;
 	
 	@Column(name = "password")

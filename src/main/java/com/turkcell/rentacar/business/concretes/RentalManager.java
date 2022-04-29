@@ -69,10 +69,15 @@ public class RentalManager implements RentalService {
 		return new SuccessDataResult<GetByIdRentalDto>(response); 
 	}
 
+	/*
+	 * TODO: additionalServices null after mapping.
+	 * Fix it
+	 */
 	@Override
 	public Result add(CreateRentalRequest createRentalRequest) {
 		
-		Rental request = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
+		Rental request = this.modelMapperService.forRequest()
+				.map(createRentalRequest, Rental.class);
 		
 		isCarInMaintenance(request.getCar().getId());
 		
@@ -82,23 +87,25 @@ public class RentalManager implements RentalService {
 	}
 
 	@Override
-	public Result update(int id, UpdateRentalRequest updateRentalRequest) {
+	public Result update(int id, 
+			UpdateRentalRequest updateRentalRequest) {
 		
 		IdValidationUtils.checkIfIdValid(id, this.rentalDao);
-		Rental request = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
-		Rental updated = this.rentalDao.getById(id);
+		Rental request = this.modelMapperService.forRequest()
+				.map(updateRentalRequest, Rental.class);
 		
-		updated.setRentDate(request.getRentDate());
-		updated.setReturnDate(request.getReturnDate());;
-		updated.setCar(request.getCar());
-		updated.setCustomer(request.getCustomer());
-		updated.setAdditionalServices(request.getAdditionalServices());
-		updated.setReturnCity(request.getReturnCity());
-		updated.setRentCity(request.getRentCity());
+		Rental updated = parseRequestToUpdate(request, id);
 		
 		if (!isSameCity(updated))
 		{
-			updated.setPrice(750);
+			double prevPrice = updated.getPrice();
+			double newPrice = 0;
+			if (Objects.nonNull(prevPrice))
+			{
+				newPrice = prevPrice + 750;
+			}
+			
+			updated.setPrice(newPrice);
 		}
 		
 		this.rentalDao.save(updated);
@@ -146,5 +153,24 @@ public class RentalManager implements RentalService {
 		
 		return rent.getRentCity().getId() == rent.getReturnCity().getId();
 	}
+	
+	private Rental parseRequestToUpdate(Rental request, int id) {
+		
+		Rental updated = this.rentalDao.getById(id);
+		
+		if (Objects.nonNull(request.getReturnDate()))
+		{
+			updated.setReturnDate(request.getReturnDate());;
+		}
+		
+		if (Objects.nonNull(request.getReturnCity()))
+		{
+			updated.setReturnCity(request.getReturnCity());
+		}
+		
+		return updated;
+	}
+	
+	
 	
 }

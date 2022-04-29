@@ -16,5 +16,5 @@ public class GetByIdRentalDto {
 	private int customerId;
 	private LocalDate rentDate;
 	private LocalDate returnDate;
-	private List<String> serviceName;
+	private List<String> additionalServiceServiceNames;
 }

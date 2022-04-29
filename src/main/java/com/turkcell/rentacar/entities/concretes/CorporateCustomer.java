@@ -2,9 +2,6 @@ package com.turkcell.rentacar.entities.concretes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -19,11 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "corporate_customers")
-@PrimaryKeyJoinColumn(name = "customer_id")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 public class CorporateCustomer extends Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	
+	@Column(name = "id",
+			insertable = false, updatable = false)
 	private int id;
 	
 	@Column(name = "tax_number")

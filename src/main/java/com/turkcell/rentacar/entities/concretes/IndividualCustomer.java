@@ -16,16 +16,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "individual_customers")
-@PrimaryKeyJoinColumn(name = "customer_id")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 public class IndividualCustomer extends Customer {
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;*/
+
+	@Column(name = "id", 
+			insertable = false, updatable = false)
+	private int id;
 	
 	@Column(name = "first_name")
 	private String firstName;
 	
 	@Column(name = "last_name")
 	private String lastname;
+	
+	@Column(name = "identity_number", unique = true)
+	private String identityNumber;
 }
